@@ -31,4 +31,12 @@ class ApplicationController extends Controller
         
         return response('Успешно отправлено');
     }
+
+    public function sorted(Request $request)
+    {
+        $sortedQuery = $request->query('groupBy') ?? 'created_at';
+        $applications = DB::table('applications')->orderBy($sortedQuery)->simplePaginate(150);
+
+        return response($applications);
+    }
 }
